@@ -1,0 +1,152 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{amsmath, amssymb}
+
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+	\def\svgwidth{\columnwidth}
+	\import{./figures/}{#1.pdf_tex}
+}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+	\section{Mathematics Refresher for Machine Learning}
+	\subsection{Sets}
+	A set is a well-defined collection of distinct objects (possibly infinite or uncountable).
+	E.g:
+	\begin{itemize}
+		\item $\{1,2,3\}, \{a,e,i,o,u\}, \{\pi,e\}  $
+		\item Integers $\Z = \{\ldots,-3,-2,-1,0,1,2,3,\ldots\}$
+		\item Positive Integers $\Z_{++} = \{1,2,3,\ldots\} $
+		\item Real Numbers $\R$
+	\end{itemize}
+	If x is an elements of set Z we write $x\inZ$.
+	E.g: $x\in\R$ means x is a real number.
+	Set builder notation:
+	\begin{itemize}
+		\item Positive reals $\R_{++} = \{x\in\R: x>0\} $
+	\end{itemize}
+	\subsection{Sets: empty set, cardinality, intersection, union}
+	The empty set is the set with no elements $\0 = \{\} $
+	The cardinality of a set is the number of elements in the set.
+	E.g: $X = \{1,2,3\}, |X|=\#X=3$ 
+	The intersection of two sets is the set containing all common elements.
+	If $A = \{1,2,3\}$ and $B = \{3,4,5\}$ then the intersection $A\cap B = \{3\} $
+	\[
+		\Z \cap \R = \Z
+	.\]
+	The union of two sets is the set containing all elements that occur in either set.
+	If $A = \{1,2,3\} $ and $B = \{3,4,5\} $, then the union $A \cup B = \{1,2,3,4,5\} $ 
+	\[
+		\Z \cup \R = \R
+	.\]
+	\subsection{Sets: subsets}
+	A is a subset of B if all the elements of A are also contained in B.
+	Written as $A \subset B$ 
+	\[
+		\{1,2\} \subset \{1,2,3\}
+	.\]
+	\[
+		\Z \subset \R
+	.\]
+	\[
+		\Z_{++} \subset \Z_+ \subset \Z \subset \R
+	.\]
+	\[
+		\N \subset \Z \subset \Q \subset \R
+	.\]
+	\subsection{Vectors}
+	Vectors, in general, an abstract mathematical notation, but for the purpose of this module can be
+	thought of as an ordered list of numbers
+	E.g: Column vectors:
+	\[
+		x = \begin{pmatrix} 1\\ 3\\ \end{pmatrix} 
+		y = \begin{pmatrix} 3\\ 1\\ 8 \end{pmatrix}
+	.\]
+	To say that a vector x is real values with D dimensions, we write $x \in \R^D$ 
+	E.g: $x \in \R^2, y \in \R^3 $ 
+	Can write column vectors more compactly using parentheses $x = (13)$ 
+	The elements of a vector are usually denoted using subscripts
+	E.g: if $x = (1 4 5)$ then $x_1 = 1, x_2 = 4, x+3 = 5$
+	The transpose of a column vector is a row vector
+	\[
+		x = \begin{pmatrix} 1\\ 2\\ 3 \end{pmatrix}
+		x^T = [1 2 3]
+	.\]
+	This gives us another way to write column vectors compactly:
+	$x = [x_1 x_2 x_3]^T \in \R^3$
+	\subsection{Adding and Scaling Vectors}
+	To add two row or column vectors of the same dimension, just add their components
+	\[
+		x = \begin{pmatrix} x_1\\ x_2 \\ \vdots\\ x_D \end{pmatrix} 
+		y = \begin{pmatrix} y_1\\ y_2 \\ \vdots\\ y_D \end{pmatrix}
+		x+y = \begin{pmatrix} x_1+y_1 \\ x_2 +y_2 \\ \vdots\\ x_D+y_D \end{pmatrix}
+	.\]
+	You cannot add a row vector to a column vector or vice versa (unless the dimension is 1)
+	You cannot add vectors of different dimensions.
+	To multiply a vector $x \in \R^D$ by a scalar $\alpha \in \R$, just multiply each component.
+	\[
+		\alpha x = [\alpha x_1 \alpha x_2 \ldots \alpha x_D]^T
+	.\]
+	\subsection{Dot product}
+	The dot product between two vectors $x,y \in \R^D$ is computed by multiplying the
+	corresponding components of x and y and adding up the products.
+	\[
+	x\cdot y = x_1 y_1 + x_2 y_2 + \ldots = \sum_{i=1}^{N} x_i y_i
+	.\] 
+	The dot product is also called the inner product or scalar product.
+	Alternative notations:
+	 \begin{itemize}
+		 \item $x^T y$ (dot product as a a matrix multiplication)
+		 \item $(x,y)$ or $(x|y)$ (bracket notation, common in physics)
+		 \item $xy$ implicit notation
+	\end{itemize}
+	\subsection{Norms}
+	Most common norm is the Euclidean norm or $L_2$ norm, denoted $\mid\mid x\mid\mid_2$
+	or just $ \mid  \mid x \mid  \mid $.
+	Gives the length of a vector.
+	\[
+	\mid  \mid x \mid  \mid = \sqrt{x^T x} = \sqrt{\sum_{i}x_i^2} 
+	.\] 
+	The squared Euclidean norm $ \mid  \mid x \mid  \mid^2$ is often useful:
+	\[
+	 \mid  \mid x \mid  \mid^2 = x^Tx = x\cdot x
+	.\] 
+	Another common norm is the $L_1$ norm, which is the sum of absolute values of x
+	\[
+		\mid  \mid x \mid  \mid_1 = \sum_{i} \mid x_i \mid 
+	.\] 
+	\subsection{Properties of Norms}
+	A norm is any function p from vectors to $\R$ that satisfies:
+	\begin{enumerate}
+		\item $p(\alpha x) =  \mid \alpha  \mid p(x)$ for $\alpha \in \R$ 
+		\item $p(x+y) \le p(x) + p(y)$ (Triangle inequality)
+		\item $p(x) = 0 \iff x = 0$
+	\end{enumerate}
+	We also have $p(-x) = p(x)$
+	E.g: $ \mid  \mid 5x \mid  \mid = 5  \mid \mid x  \mid \mid$ for any norm $ \mid  \mid \cdot  \mid  \mid $
+	\subsection{Norms and Distance Metrics}
+	Any vector space V and norm p can be used to induce a distance metric (define a metric
+	space) by defining the distance metric to be $d(x,y) = p(x,y)$ 
+	E.g: The space of D dimensional real valued vectors $\R^D$ and the $L_2$ norm give the 
+	Euclidean space with metric $d(x,y) =  \mid  \mid x - y  \mid  \mid_2$
+	In 2D this gives the familiar Euclidean distance between two points x and y:
+	\[
+		d(x,y) =  \mid  \mid x-y \mid  \mid_2 = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2} 
+	.\] 
+	\subsection{Matrices}
+\end{document}
