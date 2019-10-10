@@ -1,0 +1,636 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[dutch]{babel}
+\usepackage{amsmath, amssymb}
+
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+	\def\svgwidth{\columnwidth}
+	\import{./figures/}{#1.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\section{Data Storage and I/O}
+\subsection{Data storage and I/O}
+\subsection{File Formats}
+\begin{itemize}
+	\item Binary Formats
+	\begin{itemize}
+		\item Numeric values stored encoded in binary representation
+		\begin{itemize}
+			\item 32 bi float
+			\item 16 but integer
+		\end{itemize}
+		\item Properties
+		\begin{itemize}
+			\item Compact
+			\item High Performance I/O
+			\item Not Human Readable
+			\item Worry about int size, endiness, un/signed
+		\end{itemize}
+	\end{itemize}
+	\item Plain text formats (ASCII/Unicode)
+	\begin{itemize}
+		\item Numeric values encoded as ASCII/Unicode strings
+		\begin{itemize}
+			\item float $\to$ "3.1415926"
+			\item int $\to $ "44"
+		\end{itemize}
+	\item Peroperties:
+		\begin{itemize}
+			\item Human Readable
+			\item Self-documenting
+			\item Slower I/O
+			\item Less compact
+		\end{itemize}
+	\end{itemize}
+	\item Choice depends on app
+	\begin{itemize}
+		\item Smaller files $\to $ Plain Text
+		\item Larger files $\to $ Binary
+	\end{itemize}
+\end{itemize}
+\subsection{ASCII Formats for Tabular Data}
+\begin{itemize}
+	\item Two common formats:
+	\begin{itemize}
+		\item CSV: Comma Separated Values
+		\item FWF: Fixed Width Format
+	\end{itemize}
+\end{itemize}
+\subsection{CSV}
+\begin{itemize}
+	\item Plain txt format
+	\item Rows on Lines
+	\item Column sep by commas
+	\item Not only commas (Tabs: TSV)
+	\item Strins Containing commas are quoted
+	\item Advantages
+	\begin{itemize}
+		\item Read by multiple apps e.g. Excel#
+		\item Fast to parse/generate
+		\item can be compressed (.csv.gz)
+		\item Do not need to load all into mem. (Streamable)
+	\end{itemize}
+	\item Disadvantages:
+	\begin{itemize}
+		\item Not standardised
+		\item Bulkier than binary formats (esp. if not compressed)
+		\item No types
+	\end{itemize}
+\end{itemize}
+\subsection{FWF}
+\begin{itemize}
+	\item Plain text format
+	\item Rows on Lines
+	\item Columns of fixed width (fixed no. of chars)
+	\item Colum,ns padded using padding char (usually space)
+	\item Advantages:
+	\begin{itemize}
+		\item Easier to read in plain txt
+		\item Can be read by most apps
+		\item Fast to parse
+		\item Can be compressed (.fwf.gz)
+		\item Streamable
+	\end{itemize}
+	\item Disadvantages:
+	\begin{itemize}
+		\item Not standardised
+		\item Bulkier than CSV (padding chars)
+		\item Need to establlish field width before can write first row
+		\item No types
+	\end{itemize}
+\end{itemize}
+\subsection{Binary formats for tabular data}
+Binary formats are more compact and performant. Not human readable!
+\par Common binary formats:
+\begin{itemize}
+	\item HDF5
+	\item MATLAB
+	\item NumPy
+	\item Apache Arrow and Feather
+	\item Excel
+\end{itemize}
+\subsection{HDF5}
+\begin{itemize}
+	\item Hierarchical Data Format Version 5
+	\item Industry standard for numeric structured tab. data
+	\item Used in scientific community
+	\item Can store mult. datasets in single file
+	\item organize datasets into hierarchical struct. like filesys
+	\item Metadata using "attributes"
+	\item Memory mapping so entire dataset not need to be loaded into
+		memory. Mem. can be shared between processes
+	\item Library suppor in many langs.
+	\item Advantages:
+	\begin{itemize}
+		\item High performance
+		\item Compact
+		\item Mult. datasets in one file
+		\item Include type info
+		\item Metadata
+		\item Parallel reads, share mem
+		\item Optional compression
+	\end{itemize}
+	\item Disadvantages:
+	\begin{itemize}
+		\item Not human readable
+		\item Can be cumbersome when table size not known in advance
+	\end{itemize}
+\end{itemize}
+\subsection{MATLAB Files}
+\begin{itemize}
+	\item Proprietary format used by MATLAB
+	\item Common for data exchange in industry/academia
+	\item Store mult named arrays and various other structs
+	\item Newer versions of MATLAB (2006+) use HDF5
+\end{itemize}
+\subsection{NumPy}
+\begin{itemize}
+	\item NumPy has builtin support for 2 bin formats
+	\begin{itemize}
+		\item .npy contains single numpy arrays
+		\item .npz contains multiple arrays
+	\end{itemize}
+	\item Format supports compression
+	\item Advantages/Disadvantages
+	\begin{itemize}
+		\item Fast, compact
+		\item Supports mem. mapping
+		\item Built in support for numPy
+		\item No metadata
+		\item Not standardized
+		\item Main use - store temporary results
+	\end{itemize}
+\end{itemize}
+\subsection{Excel Format}
+\begin{itemize}
+	\item Common proprietary format used in Excel
+	\begin{itemize}
+		\item XLS/XLSX files
+	\end{itemize}
+	\item Advantage:
+	\begin{itemize}
+		\item Works with MS products
+		\item Keeps formatting (colours etc.
+	\end{itemize}
+	\item Disadvantages:
+	\begin{itemize}
+		\item Keeps formatting
+		\item Not portable
+		\item Proprietary
+	\end{itemize}
+\end{itemize}
+\subsection{Common formats for structured data}
+More complex structures than plain tables (although can be reduced to tables)
+Structure: encode data types, attributes, relationships, hierarchies.
+\par Common plain-text formats for structuresd data:
+\begin{itemize}
+	\item XML
+	\item JSON
+	\item YAML
+\end{itemize}
+\par Binary formats:
+\begin{itemize}
+	\item MessagePack
+	\item Google Protobuf
+\end{itemize}
+\subsection{XML}
+\begin{itemize}
+	\item Extensible Markup Language
+	\item Format for structured data - Human and Machine readable
+	\item Self describing - No additional documentation
+	\item Hierarchy made up of
+	\begin{itemize}
+		\item Elements
+		\item Attributes
+		\item Content
+	\end{itemize}
+	\item Advantages:
+	\begin{itemize}
+		\item Self-Describing
+		\item Human Readable
+	\end{itemize}
+	\item Disadvantages:
+	\begin{itemize}
+		\item High Overhead
+		\item Verbose
+		\item Slow parsers
+		\item Not well duited to big datasets
+		\item XML namespaces are nightmare
+		\item Seperate validation and DTD
+		\item Painful to manually type
+	\end{itemize}
+\end{itemize}
+\subsection{JSON}
+\begin{itemize}
+	\item JS Object Notation
+	\item Subset of JS for desc. data
+	\item Value types:
+	\begin{itemize}
+		\item String
+		\item Number
+		\item Boolean
+		\item Object
+		\item Array
+		\item Null
+	\end{itemize}
+	\item Type implicit in syntax
+	\begin{itemize}
+		\item 35 is a number
+		\item "35" is a string
+		\item {"a" : 1} is an object
+		\item [1,2,3] is an array
+	\end{itemize}
+	\item Advantages:
+	\begin{itemize}
+		\item Has types
+		\item Hierarchical
+		\item Human readable
+		\item Self-describing
+		\item Easy to write by hand
+		\item More compact
+		\item Faster to parse
+		\item Most languages have parsers
+	\end{itemize}
+	\item Disadvantages:
+	\begin{itemize}
+		\item Some overhead
+		\item Not well suited to big datasets
+	\end{itemize}
+\end{itemize}
+\subsection{YAML}
+\begin{itemize}
+	\item YAML Ain't Markup Language
+	\item Like JSON but easier to write
+	\item Very useful for config/meta files
+	\item Slower than JSON
+\end{itemize}
+\subsection{MessagePack}
+\begin{itemize}
+	\item  Binary encoded JSON
+	\item More compact than JSON
+	\item Advantages
+	\begin{itemize}
+		\item Compact
+		\item High I/O perforrmance
+		\item Good for network I/O and DBs
+		\item Good for bigger data
+		\item Streamable
+	\end{itemize}
+	\item Disadvantages:
+	\begin{itemize}
+		\item Not Human readable
+		\item Less suited to large numerical arrays
+	\end{itemize}
+\end{itemize}
+\subsection{Google Protobuf}
+\begin{itemize}
+	\item Serializing data over the wire, can be used as file format
+	\item Defines protocol specification language (prototxt) and wire format
+	\item Used for model spec. and distribution by well-known deep learning
+		library developed by Berkeley
+\end{itemize}
+\subsection{Things to consider when choosing a data format}
+\begin{itemize}
+	\item I/O performance
+	\item Structure support
+	\item Streamable
+	\item Scalability
+	\item Appendable
+	\item Portability
+	\item Compactness
+	\item Metadata
+	\item Type support
+	\item Readability
+	\item Write by hand
+\end{itemize}
+\subsection{Databases}
+\begin{itemize}
+	\item Common for data acq. and storage
+	\item Advantages
+	\begin{itemize}
+		\item Network Access
+		\item concurrency
+		\item Enforced consistency
+		\item Fast indexes
+		\item Query languages
+	\end{itemize}
+	\item Not efficient for large binary data
+	\item Two important types:
+	\begin{itemize}
+		\item Relational Databases (SQL)
+		\item NoSQL Databases
+	\end{itemize}
+\end{itemize}
+\section{Data Wrangling}
+\subsection{Real-World Datasets}
+Real world datasets often "dirty": messy, inconsistent
+\par sources of problems
+\begin{itemize}
+	\item Use incomplete standards
+	\item Manyal entry errors
+	\item Measurement errors
+	\item Inconsustent notations
+	\item Redundancies and duplicates
+	\item Missing values
+	\item E.G:
+	\begin{itemize}
+		\item Headers needing to be removed
+		\item Blank Lines
+		\item Missing Column names
+		\item Subheadings embedded in table
+		\item Hierarchy of categories implied using whitespace
+	\end{itemize}
+\end{itemize}
+\subsection{Data Wrangling}
+\begin{itemize}
+	\item Process of transforming "raw" data into data that can be analysed
+		to generate actionable insights
+	\item AKA:
+	\begin{itemize}
+		\item Preprocessing
+		\item Munging
+		\item Cleaning
+		\item Scrubbing
+		\item Preparation
+		\item Transformation
+	\end{itemize}
+\end{itemize}
+\subsection{Typical tasks}
+\begin{itemize}
+	\item Fixing ugly/broken formats
+	\item Handling missing values
+	\item Remoiving redundant attributes and records
+	\item Fixing inconsitencies
+	\item Shaping data
+	\item Fusing data sources
+	\item Scraping and gathering data from external sources
+	\item Extracting info from unstructured sources
+\end{itemize}
+\subsection{Ugly and Broken Formats}
+\begin{itemize}
+	\item Examples:
+	\begin{itemize}
+		\item Badly formatted tables
+		\item Broken XML/JSON (Syntax Errors)
+		\item Hand entered data with syntax errors
+		\item Log files with strange formatting
+	\end{itemize}
+	\item First Step: Transform to more machine friendly parsable format
+	\item Toolbox:
+	\begin{itemize}
+		\item Python csv module
+		\item Text editor like Vim
+		\item Custom parsing scripts
+		\item RegEx
+		\item Tabular
+		\item Pandas
+	\end{itemize}
+\end{itemize}
+\subsection{Missing Values}
+\begin{itemize}
+	\item Common, can have significant effects on analysis and conclusions
+	\item Causes
+	\begin{itemize}
+		\item Non-response
+		\item Unobserved or unknown values
+		\item Sensor or measurement errors
+		\item Censorship
+		\item Erros in data collection or data entry
+	\end{itemize}
+	\item Often show up in datasets as
+	\begin{itemize}
+		\item Special NA values
+		\item NaN
+		\item null or None
+		\item Sentinel values (e.g. age ==  -1)
+		\item Blanks
+	\end{itemize}
+	\item Three types:
+	\begin{enumerate}
+		\item Missing completely at random (MCAR): missing values
+			random;ly distributed for all observations
+		\item Missing at random (MAR): Prob. of value being missing
+			depends on other observed variables
+		\item Missing not at random (MNAR): Prob. of value being missing
+			depends on value of missing variable or another
+			unobserved variable
+	\end{enumerate}
+	\begin{itemize}
+		\item MCAR and MAR assumption is common
+		\item If addunp. made when dealing with missing values, make
+			them explicit
+	\end{itemize}
+\end{itemize}
+\subsection{Strategies for handling missing values}
+\begin{itemize}
+	\item Three common approaches:
+	\begin{enumerate}
+		\item Ignore
+		\begin{itemize}
+			\item Drop missing values when computiong summary stats.
+				(mean, variance)
+		\end{itemize}
+		\item Remove
+		\begin{itemize}
+			\item If plenty of data available, may be possible to
+				ignore rows with missing values
+		\end{itemize}
+		\item Impute
+		\begin{itemize}
+			\item Try to fill in blanks
+			\item Common imputation techniques
+			\begin{itemize}
+				\item Mean/mode sub
+				\item Predict from other attrib.
+				\item Interpolation (e.g. time series)
+			\end{itemize}
+		\end{itemize}
+	\end{enumerate}
+	\item May introduce bias for MNAR values
+\end{itemize}
+\subsection{Redundant attributes}
+\begin{itemize}
+	\item For example:
+	\begin{itemize}
+		\item Useless attribs
+		\item Duplicated attribs
+		\item Attribs easily derived from other attribs
+	\end{itemize}
+	\item Can cause problems for some stat analysis
+	\item Eliminate redundancy where possible
+\end{itemize}
+\subsection{Inconsistent Categories (Nominal Attributes)}
+\begin{itemize}
+	\item E.G:
+	\begin{itemize}
+		\item Misspellings
+		\item Inconsistent Spellings
+		\item Hyphenation
+		\item Inconsistent case
+		\item Inconsistent abbreviations
+	\end{itemize}
+	\item Techniques:
+	\begin{itemize}
+		\item Print unique vals and try to detect outliers and splits
+		\item Normalize case and spelling
+	\end{itemize}
+	\item Tools:
+	\begin{itemize}
+		\item Unix: sort | uniq
+		\item Py: sort, set()
+		\item str.lower, str.replace,
+		\item regex
+	\end{itemize}
+\end{itemize}
+\subsection{Dates and Times}
+\begin{itemize}
+	\item Variation in ways can be represented
+	\item Cleaning should be standardized to single format
+	\item Preferably include timezone info.
+\end{itemize}
+\subsection{Parsing dates and times}
+parsedatetime library will parse almost anything
+\par Consider arrow library if a lot of date and time amnipulatio
+\subsection{Outlliers}
+\begin{itemize}
+	\item Data points extremely unlikely under data distribution
+	\item Causes:
+	\begin{itemize}
+		\item Measurement Error
+		\item Recording Error
+		\item Statistical anomalies
+	\end{itemize}
+\item Oftern want to identify prior to further analysis
+	\begin{itemize}
+		\item Measure quantity of outliers
+		\item label outlier
+		\item Completely remove
+	\end{itemize}
+\end{itemize}
+\subsection{Detecting Outliers}
+\begin{itemize}
+	\item Can detect by plotting data/visual inspection
+		\begin{itemize}
+			\item Boxplots, jitter plots, histograms
+		\end{itemize}
+	\item Alt. can make assumptions about distrib. of attrib. and find items
+		unlikelyt under distrib
+	\item e.g.assume data normally distributed
+	\begin{itemize}
+		\item Estimate sample mean and std. dev from data, compute Z
+			scores
+	\end{itemize}
+\end{itemize}
+\[
+	z = \frac{z-\mu}{\delta}
+	\mu = Sample mean
+	\delta = sample std. dev
+.\]
+\subsection{Data shaping}
+\begin{itemize}
+	\item Data often stored in "stacked"/record format
+	\item Sometimes more convenient to have one "observation" per row with
+		mult. attib.
+	\item Achieved by reshapoing or pivot operations
+\end{itemize}
+\subsection{Dealing wit unstructured data}
+So far looked at cleaning structured data.
+\par Whar about semi/unstructured data
+\begin{itemize}
+	\item Natural language plain text
+	\item HTML files
+\end{itemize}
+Usually want to extract some features from data for analysis
+\par One way of encoding text features: bag-of-words
+\subsection{Web scraping: getting data from webpages}
+\begin{itemize}
+	\item Idea: extract structured info from unstructured web pages by auto
+		downloading and parsing
+\end{itemize}
+\begin{table}[htpb]
+	\centering
+	\begin{tabular}{|c | c | c|}
+		Task & Issues & Toolbox \\
+		Getting the data & HTTP requests, cookies, headers, download,
+		JS, timing & wget, curl, requests, mechanize,
+	selenium} \\
+		Figuring out which data to get & Link crawling and spidering &
+		scrapy \\
+		Extracting structured info & Robust parsing, DOM querying &
+		PyQuery, BeautifulSoup, lxml &
+	\end{tabular}
+\end{table}
+\subsection{Web scraping}
+\begin{itemize}
+	\item wget, curl
+	\begin{itemize}
+		\item Convenient cmd line tools
+	\end{itemize}
+	\item requests
+	\begin{itemize}
+		\item Easily make HTTP req. directly in Py
+	\end{itemize}
+	\item mechanize
+	\begin{itemize}
+		\item Stateful programmatic web browsing
+		\item Pretend to be a browser (cookies, headers, and all)
+	\end{itemize}
+	\item selenium
+	\begin{itemize}
+		\item Remote control an actual browser
+	\end{itemize}
+\end{itemize}
+\subsection{PyQuery}
+\begin{itemize}
+	\item Parsing and querying HTML with PyQuery
+\end{itemize}
+\subsection{Processing log files}
+\begin{itemize}
+	\item Good example of semi-structured data
+	\item Log analysis: making sense and extracting info from log files
+	\item Regex and string partitioning are useful tools:
+	\begin{itemize}
+		\item Built-in python re module
+		\item Python string function
+		\item Unix tools: sed, awk, grep, vim
+	\end{itemize}
+\end{itemize}
+\subsection{Data wrangling best practices}
+\begin{itemize}
+	\item Keep raw data separate from cleaned data
+	\begin{itemize}
+		\item Never overwrite raw data
+	\end{itemize}
+	\item Script data wrangling steps as much as possible
+	\begin{itemize}
+		\item Need to change something later on, easier if steps are
+			scripted
+	\end{itemize}
+	\item Document all transforms, all assumptions made
+	\begin{itemize}
+		\item Distribute documentation with cleaned dataset
+		\item Make wrangling process as reproducable as possible
+	\end{itemize}
+	\item For large datasets, start with small random sample
+	\begin{itemize}
+		\item Iterate faster: once perfected cleaning steps, apply to
+			full datasets
+	\end{itemize}
+\end{itemize}
+\end{document}
+\begin{itemize}
+	\item
+\end{itemize}

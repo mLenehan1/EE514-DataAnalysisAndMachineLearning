@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{textcomp}
 \usepackage{amsmath, amssymb}
+\usepackage{listings}
 
 
 % figure support
@@ -20,6 +21,7 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Q}{\mathbb{Q}}
+\newcommand{\0}{\mathbb{\emptyset}}
 
 \pdfsuppresswarningpagegroup=1
 
@@ -34,7 +36,7 @@
 		\item Positive Integers $\Z_{++} = \{1,2,3,\ldots\} $
 		\item Real Numbers $\R$
 	\end{itemize}
-	If x is an elements of set Z we write $x\inZ$.
+	If x is an elements of set Z we write $x \in Z$.
 	E.g: $x\in\R$ means x is a real number.
 	Set builder notation:
 	\begin{itemize}
@@ -149,4 +151,339 @@
 		d(x,y) =  \mid  \mid x-y \mid  \mid_2 = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2} 
 	.\] 
 	\subsection{Matrices}
+	A rectangular array of numbers. E.g:
+	\[
+	A=\begin{bmatrix} 1 & 3 & 2 \\
+		2 & 1 & 6 \\
+	\end{bmatrix} \in \R^{2x3}
+	.\] 
+	A can be thought of as a horizontal stack of M row vectors, or a vertical stack of N
+	column vectors.
+	\[
+		A=
+		\begin{bmatrix}  
+			\mid &  \mid & & \mid  \\
+			a_1 & a_2 & \ldots & a_N \\
+			\mid &  \mid & &  \mid \\
+		\end{bmatrix}
+	.\]\[
+		A=
+		\begin{bmatrix} 
+			 & a_1^T &  \\
+			 & a_2^T &  \\
+			       & \ldots & \\
+			 & a_M^T &  \\
+		\end{bmatrix} 
+	.\] 
+	Beware of the overloaded notation! $a_i^T$ usually means the $ith$ row rather than the $ith$
+	column transposed.
+	\subsection{Matrices: Transpose}
+	The transpose of a matrix A, denoted $A^T$ is the same matrix with rows
+	and columns interchanged. E.g:
+	 \[
+		 A=\begin{bmatrix} 1 & 3 & 2 \\
+		 2 & 1 & 6\end{bmatrix} \in \R^{2x3}
+	.\] 
+	\[
+		A^T= \begin{bmatrix} 1 & 2 \\
+		3 & 1 \\
+		2 & 6\end{bmatrix} \in \R^{3x2} 
+	.\] 
+	Note:
+	\begin{itemize}
+		\item $(A+B)^T=A^T+B^T$ (Transpose is linear)
+		\item $(\alpha A)^T=\alpha(A^T) for \alpha \in \R$ (Transpose is
+			linear
+		\item $\alpha^T = \alpha for \alpha \in \R$ (Transpose a scalar
+			does nothing)
+	\end{itemize}
+	\subsection{Adding and Scaling Matrices}
+	Matrices of the same dimenstions can be added together in the same way
+	as with vectors: just add the corresponding components. \par
+	Matrices can be scaled by scalars by just multiplying each element by
+	the scalar.
+	\subsection{Matrix Multiplication}
+	Two matrices can be multiplied if the number of columns in the first
+	matrix equals the number of rows in the second matrix. \par
+	E.g it is possible to multiply A and B if $A \in \R^{MxN}$ and $B \in
+	\R^{NxD}$. The resulting matrix AB will have dimension $MxD$. Rule:
+	inner dimension must match, outer dimension gives dimension of result.
+	\par
+	The $ij$ element of the product AB is equal to the inner product of row
+	$a_i^T$ from A and column $b_j$ from B:
+	\[
+		(AB)_{ij}=a_i^Tb_j = \sum_{k=1}^{M}a_{ik}b_{kj}
+	.\] 
+	Multiplying two matrices requires performing MxD inner products
+	\subsection{Matrix-Vector Multiplication}
+	A matric-vector multiplication Ax can be performed if the number of
+	columns in A equals the number of rows (entries) in x. \par
+	A matrix-vector product can be interpreted as a linear combination of
+	the columns of A.
+	\[
+		A = \begin{bmatrix}  \mid &  \mid & &  \mid \\
+		a_1 & a_2 & \ldots a_N \\
+	        \mid &  \mid & &  \mid \\\end{bmatrix} 
+	.\] 
+	\[
+	x = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_N \end{bmatrix} 
+	.\] 
+	\[
+	Ax = x_1a_1 + x_2a_2 + \ldots + x_Na_N
+	.\] 
+	I.e. each elements of x scales a colu,m of A and the result is the sum
+	of these scaled columns. \par
+	It can also be interpreted as a set of M inner products between rows of
+	A and x with each output being put in the resulting vector.
+	\subsection{Matrix-Matrix Multiplication}
+	Matrix-matrix multiplication AB can be interpreted as a series of matrix
+	vector multiplications, one for each of the colu,ms of B, with the
+	results being stacked side-by-side in a matrix.
+	\[
+		AB = \begin{pmatrix} Ab_1 & Ab_2 & \ldots & Ab_D \end{pmatrix} 
+	.\] 
+	Rules of matrix multiplication:
+	\begin{enumerate}
+		\item Not commutative: in general $AB \neq BA$ 
+		\item Distributive: $A(B+C) = AB + AC$ 
+		\item Associative: $A(BC) = (AB)C = ABC$ 
+		\item Transposes: $(AB)^T = B^TA^T$
+	\end{enumerate}
+	\subsection{Square Matrices, Identities}
+	A matrix is square if it has the same number of rows and columns. E.g $A
+	\in \R^{3x3}$. \par
+	The matrix I is called the identity matrix. The 3x3 identity matrix is:
+	\[
+		I = \begin{bmatrix} 1 & 0 & 0 \\
+		0 & 1 & 0 \\
+	        0 & 0 & 1 \end{bmatrix} 
+	.\] 
+	Multiplication by the identity matrix gives back the original matrix
+	\begin{itemize}
+		\item $AI=A$ 
+		\item $IA = A$
+	\end{itemize}
+	\subsection{Inverses}
+	The square matrix B is said to be an inverse of the square matrix A if
+	$AB = I$. \par
+	The inverse of A (if it exists) is denoted $A^{-1}$ 
+	\begin{itemize}
+		\item $AA^{-1}=I$ 
+		\item $A^{-1}A=I$ 
+		\item $(AB)^{-1}=B^{-1}A^{-1}$
+	\end{itemize}
+	Terminology:
+	\begin{itemize}
+		\item A square matrix that has an inverse is called nonsingular
+			or invertible (also nondegenerate)
+		\item A square matrix that has no inverse is called singular or
+			degenerate
+	\end{itemize}
+	\subsection{Computing Inverses}
+	Most numerical computation packages include functions for computing
+	inverses. The algorithm used is usually LU decomposition or Gauss-Jordan
+	elimination. \par
+	E.g Python numpy.linlang.inv(A). MATLAB inv(A). \par
+	You can invert 2x2 matrices by hand with:
+	\[
+		A= \begin{bmatrix} a & b \\ c & d \end{bmatrix} 
+		A^{-1}=\frac{1}{ad-bc}\begin{bmatrix} d & -b \\ -c & a \end{bmatrix} 
+	.\] 
+	The matrix has no inverse if the determinant $det(A)=0$. In the 2x2 case
+	the determinant is given by  $det(A)=ad-bc$ 
+	\subsection{System of linear equations}
+	A system of linear equations can be solved by using the inverse. E.g.
+	consider the linear system:
+	\[
+	3x+2y-x=1
+	2x-2y+4z=-2
+	-x+0.5y-z=0
+	.\] 
+	This can be written in matrix form as $Ax=b$ with:
+	\[
+		A=\begin{bmatrix} 3 & 2 & -1 & \\
+		2 & -2 & 4 \\
+		-1 & 0.5 & -1\end{bmatrix} 
+		x=\begin{bmatrix} x \\ y \\ z \end{bmatrix} 
+		b=\begin{bmatrix} 1 \\ -2 \\ 0 \end{bmatrix} 
+	.\] 
+	And can be solved by finding the inverse of A and multiplying by b:
+	\[
+		x = A^{-1}b
+	.\] 
+	\subsection{Solving systems of linear equations numerically}
+	You could do the calculations in Python as follows:
+	\begin{lstlisting}[language=Python]
+	import numpy as np
+	A = np.array([[3,2,-1],[2,-2,4],[-1,0.5,-1]])
+	b = np.array([1,-2,0])
+	x = np.dot(np.linlang.inv(A), b)
+	print(x)
+	\end{lstlisting}
+	Which gives the answer (1,-2,-2). \par
+	Note that computing the inverses is usually not the most efficient way
+	of doing this. Just call $numpy.linlang.solve$ directly.
+	\begin{lstlisting}[language=Python]
+	x = np.linlang.solve(A,b)
+	\end{lstlisting}
+	\subsection{Quadratic Forms}
+	Expressions like $x^TAx$ are called quadratic forms. They are scalar
+	quantities.
+	\[
+		x^TAx = x^T(Ax) = X^Tz, z=Ax
+	.\] 
+	They are called quadratic since they involve powers and cross terms of x
+	\[
+		x^TAx = \sum_{i=1}^{N}\sum_{j=1}^{N}A_{ij}x_ix_j
+	.\] 
+	\subsection{Positive Definiteness}
+	If $x^TAx>0 \forall x \neq  0$ then the (symmetric) matrix A is said to
+	be symmetric positive definite (SPD). Sometimes written as $A \succ 0$.
+	\par
+	A is positive definite matrices if and only if:
+	\begin{enumerate}
+		\item All eigenvalues of A are positive ( $\lambda_i(A)>0
+			\forall i$ )
+		\item All pivots of A are positive
+		\item All principal minors of A are positive (determinants of
+			upper kxk submatrices)
+		\item $x^TAx > 0 \forall x\neq 0$
+	\end{enumerate}
+	Every pos. def. matrix can be written as a product $A-L^TL$ for some
+	matrix L (A has a cholesky decomposition)
+	\subsection{Positive Semi-Definite, Negative definite, etc.}
+	\begin{table}[htpb]
+		\centering
+		\caption{}
+		\label{tab:}
+		\begin{tabular}{c|c|c|c}
+			Positive Definite (SPD) & $A \succ$ &  $x^TAx>0$ &
+			$\lambda_i(A)>0$ \\
+			Positive Semidefinite (PSD) & $A \succeq 0$ & $x^TAx \ge
+			0$ & $\lambda_i(A) \ge 0$ \\
+			Negative Definite & $A \prec 0$ & $x^TAx<0$ &
+			$\lambda_i(A)<0$ \\
+			Negative Semidefinite & $A \preceq 0$ & $x^TAx \le 0 &
+			\lambda_i(A) \le 0$
+		\end{tabular}
+	\end{table}
+	\subsection{More Notation}
+	Set of symmetric matrices:
+	\[
+	\S^n=\{X \in \R^nxn:X=X^T\} 
+	.\] 
+	Set of symmetric positive definite matrices:
+	\[
+		\S_{++}^n=\{X\in\S^n:X\succ_0\} 
+	.\] 
+	Set of symmetric positive semidefinite matrices:
+	\[
+	\S_+^n=\{X\in\S^n:X\succeq_0\} 
+	.\] 
+	\subsection{Eigenvalues and Eigenvectors}
+	For an nxn matrix A, scalars $\lambda$ and vectors $x\neq 0$ satisfying
+	\[
+	Ax =\lambda x
+	.\] 
+	are called eigenvalues and eigenvextors of A. \par
+	The set of distinct eigenvalues, denoted by $\lambda(A)$, is called the
+	spectrum of A. \par
+	Interpretation: Eigenvectors are directions in which A behaves as if it
+	were a scalar. The coresponding eigenvalue is the amount by which the
+	eigenvector is scaled in that direction. \par
+	Eigenvectors and eigenvalues are ty\pically calculated numerically (e.g.
+	using numpy.linalg.eig)\par
+	Notation:
+	\begin{itemize}
+		\item $\lambda_i(A)$ is the i-th eigenvalue of A
+		\item  $\lambda_{max}(A)$ is the largest eiigenvalue of A
+		\item $\lambda_{min}(A)$ is the smallest eigenvalue of A
+	\end{itemize}
+	Note:
+	\begin{itemize}
+		\item If $\lambda_i(A)=0$ for any i then A is singular
+		\item $tr(A)=\sum_{i=1}^{n} \lambda_i(A)$ 
+		\item $det(A)=\prod_{i=1}^{n} \lambda_i(A) $
+	\end{itemize}
+	\subsection{Eigenvalue Decomposition}
+	If $A \in \R^{nxn}$ has n distinct eigenvalues then we can write down n
+	eigenvalue equations:
+	 \[
+	Ax_1 = \lambda_1x_1 \\
+	.\] 
+	\[
+	Ax_2 = \lambda_2x_2 \\
+	.\] 
+	\[
+	\vdots
+	.\] 
+	\[
+	Ax_n = \lambda_nx_n
+	.\] 
+	These can be grouped into a single matrix equation:
+	\[
+	AV = V\Lambda
+	.\] 
+	with
+	\[
+		V = \begin{pmatrix} x_1 & x_2  & \ldots & x_n \end{pmatrix} 
+		\Lambda = diag\begin{pmatrix} \lambda_1 & \lambda_2 & \ldots &
+		\lambda_n \end{pmatrix} 
+	.\]
+	\[
+	AV=V\Lambda
+	.\] 
+	Left multiplication with $V^{-1}$ shows that V diagonalizes A:
+	\[
+		V^{-1}AV=\Lambda
+	.\] 
+	Right multiplication by $V^{-1}$ shows that A can be decomposed into a
+	product of the matrices of eiginvectors and eigenvalues:
+	\[
+		A=V\Lambda V^{-1}
+	.\] 
+	This is called the eigenvalue decomposition of A (it is not always
+	possible)
+	\subsection{The spectral theorem for symmetric matrices}
+	If $A \in \S^n$ then:
+	\begin{enumerate}
+		\item All eigenvalues are real:
+			\[
+				\lambda_i(A) \in \R, i=1, \ldots, n
+			.\] 
+		\item Eigenvectors corresponding to distinct eigenvalues are
+			orthogonal
+			\[
+			\lambda_i \neq  \lambda_j \implies x_i^Tx_j = 0
+			.\] 
+		\item A is orthogonally diagonalizable. There exists is a
+			diagonal matrix D and a orthogonal matrix Q such that
+			$A=QDQ^T$
+	\end{enumerate}
+	\subsection{The Singular Value Decomposition (SVD)}
+	Every matrix $A \in R^{mxn}$ can be factored as follows:
+	\[
+	A = U\Sigma V^T
+	.\] 
+	Where U and V are orthogonal matrices and $\Sigma$ is a diagonal matrix
+	with non-negative entries $\Sigma=diag\begin{pmatrix} \sigma_1, &
+	\ldots, & \sigma_n \end{pmatrix} $. This can also be written as:
+	\[
+	A= \sum_{n=k} \sigma_ku_kv_k^T
+	.\] 
+	i.e. Every matrix can be written as a linear combination of rank one
+	matrices. \par
+	Compute with svd(A) (MATLAB) or numpy.linalg.svd(A) (Python)
+	\subsection{SVD}
+	\[
+	A=U\Sigma V^T
+	.\] 
+	\begin{itemize}
+		\item U contain the left singular vectors
+		\item V contain the right singular vectors
+		\item $\sigma_1, \ldots, \sigma_n$ are the singular values
+	\end{itemize}
+	By convention $\sigma_1 \ge \sigma_2 \ge \ldots \ge \sigma_n \ge 0$ \par
+	\subsection{Eckart-Young Theorem}
+
 \end{document}

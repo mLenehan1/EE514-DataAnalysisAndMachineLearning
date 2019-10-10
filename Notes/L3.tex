@@ -1,0 +1,236 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[dutch]{babel}
+\usepackage{amsmath, amssymb}
+
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+	\def\svgwidth{\columnwidth}
+	\import{./figures/}{#1.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\section{Data Summarization}
+\subsection{Distributions}
+The data distrib describes prob. of random value taking a particular value
+\par E.g: IQ follows Normal (Gaussian) distrib.
+\par Random no. generator generates random nos. that follow uniform distribution
+in [0,1]
+\par A roll of a biased dice has a categorical distrib. over the values
+$\{1,2,3,4,5,6\} $
+ \subsection{Measures of central tendency}
+ Sample statistic is a measurement on a sample from a distrib. calculated by
+ applying a function to the sample
+ \par Measures of central tendency are sample stats that attempt to capture
+ where middle of distrib is.
+ \par Three common ways of measureing central tendency
+ \begin{itemize}
+ 	\item Mean
+	\item Median
+	\item Mode
+ \end{itemize}
+ \subsection{Mean, Median, Mode}
+ \begin{itemize}
+ 	\item Arithmetic Mean:
+	\begin{itemize}
+		\item Sum of observations divided by no. of observations
+	\end{itemize}
+ \end{itemize}
+ \[
+ \overline{x} = \frac{1}{N}\sum_{n=1}^{N} x_n
+ .\]
+ \begin{itemize}
+ 	\item Median:
+	\begin{itemize}
+		\item Middle value that separates higher and lower half of
+			dataset
+		\item Sort data and take mid value
+		\item Even number of observations: take arithmetic mean of
+			middle two values
+		\item Robust Statistic (less sensitive to outliers)
+	\end{itemize}
+	\item Mode:
+	\begin{itemize}
+		\item Most freq. value in dataset
+		\item Suitable measure of central tendency for nominal variables
+		\item Easy to compute for discrete values
+		\item Not straightforward for continuous distrib.
+	\end{itemize}
+ \end{itemize}
+\begin{table}[htpb]
+	\centering
+	\begin{tabular}{c c c c}
+		& Dimension & Type & Calculate \\
+		Mean & N & Quantitative & np.mean \\
+		Median & 1 & Ordinal & np.median \\
+		Mode & N & Nominal & From histogram
+	\end{tabular}
+\end{table}
+\subsection{Sample Mean vs. Population Mean}
+Population mean is trye mnean for entire pop.: $\mu$
+\par Sample mean is calculated mean from sample of pop: $\overline{x}$
+\par E.g. pop. mean human height would require measuring height of every person
+on earth. Sample mean 100 randomly chosen people
+\par As sample size increases, sample mean approaches pop. mean
+\[
+\lim_{n \to \infty} \overline{x}_n = \mu
+.\]
+\subsection{Measures of Statistical Dispersion}
+Measure how stretched/squeezed a distrib is
+\par Most common methods:
+\begin{itemize}
+	\item Variance $\sigma^2$
+	\item Std. Dev $\sigma$
+	\item Interquartile Range (IQR)
+\end{itemize}
+Can be defined for sample or pop.
+\subsection{Variance, SD}
+\begin{itemize}
+	\item Variance
+	\begin{itemize}
+		\item Expected squared dev from mean
+	\end{itemize}
+\end{itemize}
+\[
+	\delta^2=E[(X-EX)^2]
+.\]
+\[
+	=E[(X-\mu)^2]
+.\]
+\[
+	\hat{\sigma}^2 \frac{1}{N}\sum_{i=1}^{N} (x_i-\overline{x})^2
+.\]
+Usually don't know pop mean $\mu$, so we just use sample mean:
+\[
+	\hat{\sigma}_N^2=\frac{1}{N}\sum_{i=1}^{N} (x_i-\overline{x})^2
+.\]
+For small samples, this is biased, use bias corrected estimator:
+\[
+	\hat{\sigma}_{N-1}^2=\frac{1}{N-1}\sum_{i=1}^{N} (x_i-\overline{x})^2
+.\]
+Above known as Bessel's correction
+\par Std. dev is sqrt of (possibly bias corrected) variance
+\[
+\delta=\sqrt{\sigma^2}
+.\]
+\subsection{Range and interquartile range}
+Range of sample is diff. between min and max values
+\par Range is not robust stat
+\par IQR is range in which $50\%$ of data lies
+\[
+IQR=Q_3 - Q_1
+.\]
+\subsubsection{Interquartile Range}
+IQM can be used on ordinal vars and often makes more sense than the std. dev
+\subsection{Sufficient Statistics}
+Stat. is sufficient wrt stat model and assoc. unknown paoram when no other stat
+that can be calculated from the same sample provides any additional info as tp
+the val of the param
+\par For Normal distribution, sufficient stats are mean and std. dev
+\[
+\null =\{\mu, \sigma\}
+.\]
+Once sufficient stats. known you know everything there is to know about distrib
+of var.
+\subsection{Skewness and Kurtosis}
+Most data not normally distrib.
+\par Skewness: measure of assymmetry of prob. distrib. of real values random var
+about its mean
+\par Kurtosis: Measure of how heavy tails are of prob. distrib of real-valued
+random var
+\begin{itemize}
+	\item Pearsons moment coefficient of skewness:
+	\begin{itemize}
+		\item Third standardized moment:
+	\end{itemize}
+\end{itemize}
+\[
+	_1 = E[(\frac{X-\mu}{\sigma \\})^3]
+.\]
+\begin{itemize}
+	\item Pearson's moment coefficient of kurtosis:
+	\begin{itemize}
+		\item Fourth standardized moment:
+	\end{itemize}
+\end{itemize}
+\[
+	\Beta_2 = E[\frac{X-\mu}{\sigma)^{4}}]
+.\]
+\begin{itemize}
+	\item Replace mu and sigma with sample stat.s to calculate for sample
+\end{itemize}
+\subsection{Conditioning on Categorical Variable}
+Conpute stats based on subsets of sample
+\par Subsets selected by grouping on categorical vars
+\par These are stats on the conditions distrib.
+\subsection{Statistics of association between attributes}
+Covariance: how two vars vary together
+\[
+	cov(X,Y)=E[(X-\mu_x)(Y-x_y)]
+.\]
+Pearson product-moment correlation coefficient (Pearson's rho):
+\begin{itemize}
+	\item Measure of linear relationship between quantitative vars
+	\item Normalized version of the covariance
+\end{itemize}
+\[
+	\rho_{X,Y}=\frac{cov(X,Y)}{\sigma_X\sigma_Y}
+.\]
+\begin{itemize}
+	\item Ranges from -1 to 1
+	\item >0: + correlation
+	\item <0: - correlation
+	\item +1 indicates perfect linear relationshiop between X and Y
+	\item -1 is perfect negative correlation
+\end{itemize}
+Not suitable for ordinal variables
+\subsection{Spearman Correlation}
+Spearmans rank correlation coefficient (Spearman's rho):
+\begin{itemize}
+	\item Pearson correlation between rank values of those two vars
+\end{itemize}
+\par Pearson's correlation assesses linear relationships, Spearmans correlation
+assess monotonic relationships (whether linear or not)
+\section{Data Visualization}
+\subsection{Why Visualize Data?}
+\begin{itemize}
+	\item Explore
+	\begin{itemize}
+		\item Understand data and relationships between attribs.
+		\item Generate new hypothese
+		\item Detect errors and anomalies
+	\end{itemize}
+	\item Confirm
+	\begin{itemize}
+		\item Hypotheses already generated
+		\item Check assumptions
+		\item Verify conclusions
+	\end{itemize}
+	\item Communicate
+	\begin{itemize}
+		\item Analysis has been completed
+		\item Conclusions verified
+		\item Task: Present and Communicate results
+		\item Inform, persuade, educate, entertain
+	\end{itemize}
+\end{itemize}
+\subsection{Statistical Data Visualization}
+Provide a set of standard visual tools for:
+\begin{itemize}
+	\item Undestanding the shape and distrib. of data
+	\item Understanding relationships between attribs.
+	\item Understanding composition and part-whole relationships
+	\item Comparing quantities
+\end{itemize}
+\end{document}
