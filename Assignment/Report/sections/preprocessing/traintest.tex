@@ -1,0 +1,61 @@
+\subsection{Train and Test Split}
+
+In order to accurately train and test a classification model, the dataset must
+be divided into a training set, and a test set. This removes the possibility
+that the model will ``memorize'' the entire dataset, giving a 100\% accuracy.
+While performing this split, an unbiased training and test set must be created.
+For example, training a model off entirely off ``sarcastic'' items would not
+provide good accuracy during the testing phase.
+
+\begin{lstlisting}[language=Python, caption={sklearn ``train\_test\_split''
+function},
+label={lst:ttsplit}]
+X_train, X_test, y_train, y_test = train_test_split(
+x, y , shuffle=True, test_size=0.25, random_state=1)
+\end{lstlisting}
+
+The scikit-learn python library contains a ``train\_test\_split'' function,
+which, as shown in Listing \ref{lst:ttsplit}, can be used to split the feature
+and target sets in the proportions given by the ``test\_size'' parameter. The
+``shuffle'' parameter allows for the shuffling of the data, which will allow for
+less biased split. The ``random\_state'' parameter sets the seed used by the
+random number generator, allowing for repeatability within the
+testing\cite{sk_ttsplit}.
+
+The function call in Listing \ref{lst:ttsplit} creates a train test split of
+75\% to 25\%, which is shuffled to remove bias, with a random state of 1 for
+repeatability between tests.
+
+\begin{lstlisting}[language=Python, caption={``countRealFake'' function},
+label={lst:realFake}]
+def countRealFake(targetTrainSet, targetTestSet):
+    print("Real Headlines in Training Set: %s" % sum(targetTrainSet == 0))
+    print("Fake Headlines in Training Set: %s" % sum(targetTrainSet == 1))
+    print("Real Headlines in Test Set: %s" % sum(targetTestSet == 0))
+    print("Fake Headlines in Test Set: %s" % sum(targetTestSet == 1))
+\end{lstlisting}
+
+In order to count the number of real and fake headlines within each set, the
+``countRealFake'' function is used. This function takes two datasets, namely the
+target training set, and the target test set, and prints the total number of
+fake and real headlines in each, represented by a ``1'' or a ``0'' respectively.
+
+\begin{lstlisting}[language=Python, caption={``exportTestTrain'' function},
+label={lst:exporttt}]
+def exportTestTrain(X_train, X_test, y_train, y_test, printMsgs=False):
+	Export = X_train.to_json(r'./XTrain.json', orient='records')
+	Export = X_test.to_json(r'./XTest.json', orient='records')
+	Export = y_train.to_json(r'./YTrain.json', orient='records')
+	Export = y_test.to_json(r'./YTest.json', orient='records')
+	if(printMsgs == True):
+		print("Training Features output to XTrain.json")
+		print("Test Features output to XTest.json")
+		print("Training Targets output to YTrain.json")
+		print("Test Targets output to YTest.json")
+\end{lstlisting}
+
+In order to export the feature and target training and test sets, the
+``exportTestTrain'' function is used. As shown in Listing \ref{lst:exporttt},
+this function uses the pandas library ``to\_json'' function to output the json
+object to a file. The ``orient'' parameter is set to ``records'' in order to
+make the file more human readable.

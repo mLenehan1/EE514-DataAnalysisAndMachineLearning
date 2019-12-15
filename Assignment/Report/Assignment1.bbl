@@ -1,0 +1,110 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.0 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{sk_ttsplit}{misc}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{scikit}
+      \field{title}{sklearn.model_selection.train_test_split¶}
+      \verb{urlraw}
+      \verb https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html
+      \endverb
+      \verb{url}
+      \verb https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html
+      \endverb
+    \endentry
+    \entry{skcntVect}{misc}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{scikit}
+      \field{title}{sklearn.feature_extraction.text.CountVectorizer¶}
+      \verb{urlraw}
+      \verb https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html#sklearn.feature_extraction.text.CountVectorizer
+      \endverb
+      \verb{url}
+      \verb https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html#sklearn.feature_extraction.text.CountVectorizer
+      \endverb
+    \endentry
+    \entry{boujon_2019}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=9bfa0683d784ecfe7de1f5945bd753bd}{%
+           family={Boujon},
+           familyi={B\bibinitperiod},
+           given={Cristhian},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Medium}%
+      }
+      \strng{namehash}{9bfa0683d784ecfe7de1f5945bd753bd}
+      \strng{fullhash}{9bfa0683d784ecfe7de1f5945bd753bd}
+      \strng{bibnamehash}{9bfa0683d784ecfe7de1f5945bd753bd}
+      \strng{authorbibnamehash}{9bfa0683d784ecfe7de1f5945bd753bd}
+      \strng{authornamehash}{9bfa0683d784ecfe7de1f5945bd753bd}
+      \strng{authorfullhash}{9bfa0683d784ecfe7de1f5945bd753bd}
+      \field{sortinit}{3}
+      \field{sortinithash}{a4b52e5432884761f50fb9571273b93e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Medium}
+      \field{month}{9}
+      \field{title}{How to list the most common words from text corpus using Scikit-Learn?}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://medium.com/@cristhianboujon/how-to-list-the-most-common-words-from-text-corpus-using-scikit-learn-dad4d0cab41d
+      \endverb
+      \verb{url}
+      \verb https://medium.com/@cristhianboujon/how-to-list-the-most-common-words-from-text-corpus-using-scikit-learn-dad4d0cab41d
+      \endverb
+    \endentry
+    \entry{tfdYB}{misc}{}
+      \field{sortinit}{5}
+      \field{sortinithash}{3c19c3776b658b3558e9e2e4840c01e2}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Token Frequency Distribution - Yellowbrick v1.0.1 documentation}
+      \field{title}{Token Frequency Distribution¶}
+      \verb{urlraw}
+      \verb https://www.scikit-yb.org/en/latest/api/text/freqdist.html
+      \endverb
+      \verb{url}
+      \verb https://www.scikit-yb.org/en/latest/api/text/freqdist.html
+      \endverb
+    \endentry
+    \entry{skMetric}{misc}{}
+      \field{sortinit}{7}
+      \field{sortinithash}{c818dd9105a2852444fc9f5e145c294e}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{scikit}
+      \field{title}{sklearn.metrics.precision_recall_fscore_support¶}
+      \verb{urlraw}
+      \verb https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_fscore_support.html#sklearn.metrics.precision_recall_fscore_support
+      \endverb
+      \verb{url}
+      \verb https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_fscore_support.html#sklearn.metrics.precision_recall_fscore_support
+      \endverb
+    \endentry
+  \enddatalist
+  \missing{skBayes}
+\endrefsection
+\endinput
+

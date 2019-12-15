@@ -1,0 +1,16 @@
+\subsection{Feature Extraction}
+
+For the purposes of feature extraction, a ``Bag of Words'' tokenizer is utilised
+to count the occurrences of words within the headlines. The sklearn
+``CountVectorizer'' function provides this functionality\cite{skcntVect}. There are a number of
+tunable parameters with this function, however, the main concern for this
+assignment is the inclusion or removal of ``stop words''. The headlines, and the
+words of which they comprise are the features within this dataset.
+
+\par TFIDF stands for Term-Frequency-Inverse Document Frequency. Term Frequency
+is given in terms of each headline, i.e. how frequent a term is within the
+headline, whereas inverse document frequency is the number of occurrences of the
+word acrross all documents. Tf-Idf can be implemented in python using the
+sklearn ``TfidfTransformer'' method, which can be configured to utilise, or
+ignore, idf. A comparison of the inclusion or exclusion of idf is contained in
+the Model Selection section.

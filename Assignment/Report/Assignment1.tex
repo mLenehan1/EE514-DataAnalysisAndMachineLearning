@@ -1,0 +1,83 @@
+\documentclass[a4paper 12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{textcomp}
+\usepackage[UKenglish]{babel}
+\usepackage{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\usepackage{listings}
+\lstdefinestyle{code}{
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	stringstyle=\color{codepurple},
+	showspaces=false,
+	showstringspaces=false,
+	breaklines=true
+}
+\lstset{style=code}
+\usepackage{amsmath, amssymb}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+	colorlinks=false
+}
+\usepackage[style=ieee]{biblatex}
+\bibliography{sources/biblio}
+\renewcommand{\baselinestretch}{1.5}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+	\def\svgwidth{\columnwidth}
+	\import{./figures/}{#1.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\input{cover/cover}
+\hypersetup{pageanchor=true}
+\pagenumbering{alph}
+\input{cover/declaration}
+\pagenumbering{arabic}
+\tableofcontents
+\clearpage
+\section{Introduction}
+\input{sections/introduction}
+\section{Preprocessing}
+\input{sections/preprocessing/preprocessing}
+\input{sections/preprocessing/traintest}
+\input{sections/preprocessing/feature}
+\section{Exploratory Data Analysis}
+\input{sections/dataAnalysis/exploratory}
+\section{Supervised Classification}
+\input{sections/classification/classification}
+\section{Model Selection}
+\input{sections/modelSelection/selection}
+\section{Model Evaluation}
+\input{sections/modelEval/eval}
+\section{Conclusion}
+\input{sections/conclusion}
+\clearpage
+\section{Appendix}
+
+The following is the main code body for the assignment. All other code can be
+found in the code submission, or on github at \url{https://github.com/mLenehan1/EE514-DataAnalysis\\AndMachineLearning}
+
+\par In order to execute the code, place all required python files in the working
+directory, along with the dataset, and run ``python3 assignmentMain.py'' via the command line.
+\lstinputlisting[language=Python]{sections/appendix/assignmentMain.py}
+\clearpage
+\printbibliography
+\end{document}

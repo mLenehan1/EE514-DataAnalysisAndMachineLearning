@@ -1,0 +1,12 @@
+Supervised Classigication involves training a supervised model based on the
+aforementioned features, using a validation set. Due to an error which was
+occurring - values within the target set changing to ``NaN'' - the chosen
+cross validation method of ``Leave One Out'' cross validation could not be
+correctly implemented, however, the tested implementation is commented within
+the code. As such, only the held-out test set could be used for the purpose of
+validation.
+
+\par The ``Pipeline'' function is used to quickly create a model, allowing for
+the vectorizer, tfidf function, and classifier to be applied to the training
+sets for the features and targets. The models are saved using the ``pickle''
+library's ``dump'' function. Each optimised model is saved after fitting.

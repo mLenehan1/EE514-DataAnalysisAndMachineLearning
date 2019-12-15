@@ -1,0 +1,92 @@
+For the purposes of classification within this assignment, the naive Bayes, and
+Support Vector Machine (SVM) with Stochastic Gradient Descent are utilised. The
+sklearn function ``MultinomialNB'' provides the naive Bayes classifier for the
+model\cite{skBayes}. Using this classifier, a test accuracy of approximately
+83\% was achieved.
+
+\par For the SGD classifier, the sklearn function ``SGDClassifier'' was used.
+This function takes the loss function, in this case a linear SVM is used by
+implementing the ``hinge'' loss function. The standard linear SVM ``l2'' penalty
+is also used. This classifier gives a test accurracy of approximately 79\%.
+
+By utilising the sklearn ``GridSearchCV'' function, a number of parameters can
+be tested for each model.
+
+For the Naive Bayed model, the defined parameters were as follows:
+
+\begin{lstlisting}[language=Python, caption={Bayes Model Parameters},
+label={lst:bayesParam}]
+parameters = {
+    'vect__stop_words': (None, "english"),
+    'vect__ngram_range': [(1, 1), (1, 2)],
+    'tfidf__use_idf': (True, False),
+    'clf__alpha': (1e-5, 1),
+    'clf__fit_prior': (True, False),
+}
+\end{lstlisting}
+
+By utilising this function, a ``best case'' model can be created. The model
+described by the parameters above has a best score of approximately 85\%. The
+parameters required for this performance were as follows:
+
+\begin{itemize}
+	\item Classifier:
+	\begin{itemize}
+		\item Alpha = 1
+		\item Fit Prior = False
+	\end{itemize}
+	\item Feature Selection:
+	\begin{itemize}
+		\item Tf-Idf:
+		\begin{itemize}
+			\item Use Idf = False
+			\item ngram Range = (1,2)
+		\end{itemize}
+		\item Count Vectorizer:
+		\begin{itemize}
+			\item Stop Words = None
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+For the SGD model, the defined parameters were as
+follows:
+
+\begin{lstlisting}[language=Python, caption={SGD Model Parameters},
+label={lst:sgdParam}]
+parameters = {
+    'vect__stop_words': (None, "english"),
+    'vect__ngram_range': [(1, 1), (1, 2)],
+    'tfidf__use_idf': (True, False),
+    'clf__alpha': (1e-2, 1e-3),
+    'clf__loss': ('hinge', 'log'),
+    'clf__max_iter': (1, 2, 3, 4, 5),
+    'clf__shuffle': (True, False),
+}
+\end{lstlisting}
+
+By utilising this function, a ``best case'' model can be created. The model
+described by the parameters above has a best score of approximately 81\%. The
+parameters required for this performance were as follows:
+
+\begin{itemize}
+	\item Classifier:
+	\begin{itemize}
+		\item Alpha = 0.001
+		\item Loss Function = Log
+		\item Max Iterations = 1
+		\item Shuffle = True
+	\end{itemize}
+	\item Feature Selection:
+	\begin{itemize}
+		\item Tf-Idf
+		\begin{itemize}
+			\item Use Idf = True
+			\item ngram Range = (1,1)
+		\end{itemize}
+		\item Count Vectorizer
+		\begin{itemize}
+			\item Stop Words = None
+		\end{itemize}
+	\end{itemize}
+\end{itemize}

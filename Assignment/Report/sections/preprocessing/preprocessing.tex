@@ -1,0 +1,44 @@
+In the preprocessing stage, the dataset must first be loaded into the program, the
+required data parsed from the dataset, and any inconsistencies within the
+dataset must be accounted for. Iconsistencies can include missing data, or any
+redundant or unnecessary data.
+
+\par The provided ``fake-news'' dataset is stored in the ``JSON'' format. This
+hierarchical data type makes parsing relatively simple. The ``loadData.py''
+file contains two methods, one for loading the data into a pandas DataFrame object,
+and one for defining the target values and the features within the dataset.
+
+\begin{lstlisting}[language=Python, caption={``loadJson'' function},
+label={lst:loadJson}]
+def loadJson(jsonFile, printMsgs=False):
+	jsonInput = pd.read_json(jsonFile, lines=True)
+	if(printMsgs == True):
+		print(jsonInput.head())
+		print("Shape:", jsonInput.shape)
+		print("\nFeatures:", jsonInput.columns)
+	return jsonInput
+\end{lstlisting}
+
+The function shown in Listing \ref{lst:loadJson} utilises the pandas python
+library, and it's provided ``read\_json'' function. This function loads a json
+file, with the given file path, to a pandas DataFrame object. As the provided
+dataset contains each json object on a new line, the ``lines'' parameter of the
+``read\_json'' function must be set to ``True'', telling the function to treat
+each newline as a new json object.
+
+\begin{lstlisting}[language=Python, caption={``splitFeaturesAndTargets''
+function}, label={lst:splitFAndT}]
+def splitFeaturesAndTargets(data, printMsgs=False):
+	x = data[data.columns[1:]]
+	y = data[data.columns[0]]
+    	if(printMsgs == True):
+		print("Feature Matrix:", x.head())
+		print("\nResponse Vector", y.head())
+	return x, y
+\end{lstlisting}
+
+The function shown in Listing \ref{lst:splitFAndT} performs the split of the
+features from the dataset. The features chosen are the ``headlines'', and the
+``article links''. The targets are chosen as the ``is\_sarcastic'' value, which is
+the ground truth, i.e. indicates whether the headline is deemed to be sarcastic,
+and therefore fall into the category of ``fake news''
